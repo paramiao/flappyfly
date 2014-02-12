@@ -1,63 +1,81 @@
-/****************************************************************************
- Copyright (c) 2010-2012 cocos2d-x.org
- Copyright (c) 2008-2010 Ricardo Quesada
- Copyright (c) 2011      Zynga Inc.
+var canvas = document.getElementById('canvas'),
+	context = canvas.getContext('2d');
+	ctx = canvas.getContext('2d');
+ctx.strokeStyle = "#666"; 
+function useBeginPath() { 
+for (var i = 0; i < 5; ++i) { 
+ctx.beginPath(); 
+ctx.rect(10 + i*20, 10 + i*20, 210 - i*40, 210 - i*40); 
+ctx.stroke(); 
+} 
+} 
+function notUseBeginPath() { 
+ctx.beginPath(); 
+for (var i = 0; i < 5; ++i) { 
+ctx.rect(240 + i*20, 10 + i*20, 210 - i*40, 210 - i*40); 
+ctx.stroke(); }}
 
- http://www.cocos2d-x.org
+var img = new Image();
+img.src = 'http://flapmmo.com/atlas.png';
+
+var spriteWidth  = 350,
+	spriteHeight = 170,
+	pixelsLeft   = 170,
+	pixelsTop    = 10,
+
+	canvasPosX   = 20,
+	canvasPosY   = 20
+	;
+
+	context.drawImage(img, 
+			pixelsLeft,
+			pixelsTop,
+			spriteWidth,
+			spriteHeight,
+			canvasPosX,
+			canvasPosY,
+			spriteWidth,
+			spriteHeight
+			);
 
 
- Permission is hereby granted, free of charge, to any person obtaining a copy
- of this software and associated documentation files (the "Software"), to deal
- in the Software without restriction, including without limitation the rights
- to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
- copies of the Software, and to permit persons to whom the Software is
- furnished to do so, subject to the following conditions:
+	function Sprite(img, width, height, positions){
+		this.img = img;
+		this.width = width;
+		this.height = height;
+		this.positions = positions;
 
- The above copyright notice and this permission notice shall be included in
- all copies or substantial portions of the Software.
+	}
+Sprite.prototype = {
+draw: function(position, x, y){
+		  var pos = this.positions[position];
+		  context.drawImage( 
+				  this.img,
+				  pos[0],
+				  pos[1],
+				  this.width,
+				  this.height,
+				  x, y,
+				  this.width,
+				  this.height
+				  );
 
- THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- THE SOFTWARE.
- ****************************************************************************/
-var cocos2dApp = cc.Application.extend({
-    config:document['ccConfig'],
-    ctor:function (scene) {
-        this._super();
-        this.startScene = scene;
-        cc.COCOS2D_DEBUG = this.config['COCOS2D_DEBUG'];
-        cc.initDebugSetting();
-        cc.setup(this.config['tag']);
-        cc.AppController.shareAppController().didFinishLaunchingWithOptions();
-    },
-    applicationDidFinishLaunching:function () {
-        if(cc.RenderDoesnotSupport()){
-            //show Information to user
-            alert("Browser doesn't support WebGL");
-            return false;
-        }
-        // initialize director
-        var director = cc.Director.getInstance();
+	  }
 
-        cc.EGLView.getInstance().resizeWithBrowserSize(true);
-        cc.EGLView.getInstance().setDesignResolutionSize(800, 450, cc.RESOLUTION_POLICY.SHOW_ALL);
+};
 
-        // turn on display FPS
-        director.setDisplayStats(this.config['showFPS']);
+var sprite = new Sprite(img, 32, 16, [
+		[10, 523],  // green
+		[131, 523], // pink
+		[191, 523]  // hit
 
-        // set FPS. the default value is 1.0/60 if you don't call this
-        director.setAnimationInterval(1.0 / this.config['frameRate']);
+		]);
+sprite.draw(0, 10, 200);
+sprite.draw(1, 50, 200);
+sprite.draw(2, 90, 200);
 
-        //load resources
-        cc.LoaderScene.preload(g_resources, function () {
-            director.replaceScene(new this.startScene());
-        }, this);
 
-        return true;
-    }
-});
-var myApp = new cocos2dApp(HelloWorldScene);
+//$(document).ready(function() {  
+//	$img.box2d({'y-velocity':5});
+//});
+console.log('hello')

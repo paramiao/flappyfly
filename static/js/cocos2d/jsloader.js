@@ -312,7 +312,7 @@
 
     var loaded = 0;
     var que = engine.concat(c.appFiles);
-    que.push('/static/js/main.js');
+    que.push('/static/js/cocos2d/main.js');
 
     if (navigator.userAgent.indexOf("Trident/5") > -1) {
         //ie9
