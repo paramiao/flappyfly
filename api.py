@@ -23,16 +23,20 @@ define(
 
 class Application(tornado.web.Application):
     def __init__(self):
+        settings = dict(
+            template_path=os.path.join(os.path.dirname(__file__), "templates"),
+            static_path=os.path.join(os.path.dirname(__file__), "static"),
+        )
         handlers = [
+            (r'/cocos2d/(.*)', tornado.web.StaticFileHandler, {'path': settings['static_path']+'/js/cocos2d/'}),
+            (r'/src/(.*)', tornado.web.StaticFileHandler, {'path': settings['static_path']+'/js/src/'}),
+            (r'/res/(.*)', tornado.web.StaticFileHandler, {'path': settings['static_path']+'/res/'}),
+            (r'/(.*?).js', tornado.web.StaticFileHandler, {'path': settings['static_path']+'/js/'}),
             (r"/api_test", APITestHandler),
             (r"/flappy", FlappyHandler),
             (r"/template/(\S+?)/", TemplateTestHandler),
             (r"/async_test", AsyncTestHandler),
         ]
-        settings = dict(
-            template_path=os.path.join(os.path.dirname(__file__), "templates"),
-            static_path=os.path.join(os.path.dirname(__file__), "static"),
-        )
         #you can define base connetions here, such as mongodb, redis.
         self.test_connection = None
         tornado.web.Application.__init__(self, handlers, **settings)
@@ -51,6 +55,11 @@ class BaseHandler(tornado.web.RequestHandler):
 class TemplateTestHandler(BaseHandler):
     def get(self, info):
         self.render('test.html', info=info)
+
+#template test
+class FlappyHandler(BaseHandler):
+    def get(self):
+        self.render('index.html', info=None)
 
 
 #api test
