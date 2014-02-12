@@ -1,0 +1,18 @@
+<!doctype html>
+<html>
+	<head><title>hello world box2d-jquery example</title></head>
+	<style>
+		h1 {background-color: lightgray; width: 500px;}
+		div {width: 500px; background-color: lightgray;}
+	</style>
+	<body>
+		<img src="../static/res/atlas.png" width="400px" height="300px">
+		<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+		<script src="../static/js/jquery.box2d.min.js"></script>
+		<script> 
+			$(document).ready(function() {  
+				$("img").box2d({'y-velocity':5});
+			});
+		</script>
+	</body>
+</html>

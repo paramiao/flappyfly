@@ -33,7 +33,8 @@ class Application(tornado.web.Application):
             (r'/res/(.*)', tornado.web.StaticFileHandler, {'path': settings['static_path']+'/res/'}),
             (r'/(.*?).js', tornado.web.StaticFileHandler, {'path': settings['static_path']+'/js/'}),
             (r"/api_test", APITestHandler),
-            (r"/flappy", FlappyHandler),
+            (r"/cocos2d_test", Cocos2dHandler),
+            (r"/box2d_test", Box2dHandler),
             (r"/template/(\S+?)/", TemplateTestHandler),
             (r"/async_test", AsyncTestHandler),
         ]
@@ -56,10 +57,17 @@ class TemplateTestHandler(BaseHandler):
     def get(self, info):
         self.render('test.html', info=info)
 
-#template test
-class FlappyHandler(BaseHandler):
+
+#cocos2d test
+class Cocos2dHandler(BaseHandler):
     def get(self):
         self.render('index.html', info=None)
+
+
+#box2d test
+class Box2dHandler(BaseHandler):
+    def get(self):
+        self.render('box2d_test.html', info=None)
 
 
 #api test
