@@ -34,5 +34,8 @@ nosetests.xml
 .mr.developer.cfg
 .project
 .pydevproject
+<<<<<<< HEAD
 
 logs/*
+=======
+>>>>>>> 99333a341a610c4ad0546819a06bd8404a699d85
